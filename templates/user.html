@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .text-wrap {
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* 3 satır göster */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .list-group-item .text-wrap {
+        flex: 1;
+    }
+
+    .list-group-item form {
+        margin-left: 10px;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h2 class="card-title text-danger">Merhaba, {{ user.username }}!</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3 class="card-title">Gitmeyi Planladığım Yerler:</h3>
+                    <ul class="list-group list-group-flush">
+                        {% for post in posts %}
+                        <li class="list-group-item">
+                            <div class="text-wrap">
+                                <i class="bi bi-bookmark-check"></i> {{ post.city }} - {{ post.description }}
+                            </div>
+                            <form action="{{ url_for('delete_post', post_id=post.id) }}" method="post">
+                                <button class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3 class="card-title">Planım :</h3>
+                    <form action="" method="post" novalidate>
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ form.city.label(class="form-label") }}
+                            {{ form.city(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.country.label(class="form-label") }}
+                            {{ form.country(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.description.label(class="form-label") }}
+                            {{ form.description(class="form-control") }}
+                        </div>
+                        <div class="form-group text-center">
+                            {{ form.submit(class="btn btn-primary btn-block") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

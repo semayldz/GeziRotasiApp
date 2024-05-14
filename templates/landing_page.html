@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1 class="display-4 text-danger">GeziRotası</h1>
+    <h2 class="text-dark">Sen ve arkadaşlarının seyahat planlarını paylaştığı alan.</h2>
+    <h3 class="text-dark">Kullanıcıların gitmeyi planladığı yerler: </h3>
+    <div class="row justify-content-center">
+        {% for post in posts %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.city }}</h5>
+                    <p class="card-text">{{ post.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
